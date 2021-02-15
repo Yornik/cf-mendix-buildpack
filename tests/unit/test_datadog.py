@@ -1,10 +1,11 @@
 import os
 import json
+import unittest
 
 from buildpack import datadog
 
 
-class TestCaseDatadogUtilFunctions:
+class TestCaseDatadogUtilFunctions(unittest.TestCase):
     def test_get_service(self):
 
         tags_cases = [
@@ -15,5 +16,6 @@ class TestCaseDatadogUtilFunctions:
         ]
 
         for (tags, outcome) in tags_cases:
-            os.environ["TAGS"] = json.dumps(tags)
-            assert datadog.get_service() == outcome
+            with self.subTest(tags=tags, outcome=outcome):
+                os.environ["TAGS"] = json.dumps(tags)
+                self.assertEqual(datadog.get_service(), outcome)
