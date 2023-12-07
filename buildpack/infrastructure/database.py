@@ -345,6 +345,11 @@ class UrlDatabaseConfiguration(DatabaseConfiguration):
                     }
                 )
                 jdbc_params.update({"sslmode": "verify-full"})
+                path = os.path.expandvars("$HOME/.postgresql/"+region_pem_map[database_region])
+                f = open(path, 'r')
+                file_contents = f.read()
+                print(file_contents)
+                f.close()
         except Exception:
             raise Exception("Could not find database CA certificate in map")
     
